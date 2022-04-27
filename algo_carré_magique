@@ -1,0 +1,116 @@
+algo carré magique
+//ENTREE: Choix de la dimension du carré
+//SORTIE: un carré magique
+//BUT: toutes les lignes colonnes et diago doivent avoir la même somme
+
+
+
+PROCEDURE initialisation(tabcarre:TABLE) 
+
+//On crée le tableau en le remplissant de 0.
+
+VAR: i,j:ENTIER
+
+	POUR i DE 0 A constante FAIRE PAS DE 1
+		POUR j DE 0 A constante FAIRE PAS DE 1
+			tabcarre[i][j]<-0;
+		FINPOUR
+	FINPOUR
+	
+	// on initialise le 1 au milieu du carré
+
+	i=i/2;//on déduit la moitié pour être au milieu
+	j=(j/2)-1;//de même mais on remonte d une case pour être "au nord du milieu"
+
+	tabcarre[i][j]<-nb;
+FINPROCEDURE
+
+
+
+
+PROCEDURE avancer(tabcarre) // le deplacement dans le tableau
+VAR: k,n:ENTIER//k et n sont des compteurs
+
+	POUR k DE 0 A 1 FAIRE PAS DE 1
+		i+1 //pour avancer vers la droite dans le tableau
+		POUR n DE 0 A 1 FAIRE PAS DE 1
+		j+1// pour descendre d'une ligne dans le tableau
+			
+			SI i>=5 ALORS   //si on dépasse du tableau on retourne au début
+				i<-0;
+				placement(i,j,tabcarre[i][j]) //on vérifie si on peut placer un nombre grâce à ce nouveau déplacement
+			FINSI
+
+			SI j>=5 ALORS	//si on dépasse du tableau on retourne au début
+				j<-0;
+				placement(i,j,tabcarre[i][j])	//on vérifie si on peut placer un nombre gr^ce à ce nouveau déplacement
+			FINSI
+		FINPOUR
+	FINPOUR
+
+	placement(i,j,tabcarre[i][j]) //on vérifie si on peut placer un nombre
+	
+FINPROCEDURE
+
+
+
+FONCTION placement(tabcarre)
+
+	SI tabcarre[i][j]=0 ALORS 	//on verifie si la case est "vide" pour pouvoir placer un nombre dedans
+		nb=nb+1;
+		tabcarre[i][j]<-nb;
+	FINSI
+FINFCT
+
+
+
+FONCTION verification(tabcarre)
+
+POUR i DE 0 A 5 FAIRE PAS DE 1
+	total_i<-tabcarre[i][j]+total_i
+FINPOUR //on calcule la somme totale des nombres sur une ligne
+
+POUR j DE 0 A 5 FAIRE PAS DE 1
+	total_j<-tabcarre[i][j]+total_j
+FINPOUR  //on calcule la somme totale des nombres sur une colonne
+
+POUR i DE 0 A 5 FAIRE PAS DE 1
+	POUR j DE 1 A 0 FAIRE PAS DE -1
+		total_ij<-tabcarre[i][j]+total_ij
+	FINPOUR
+FINPOUR  //on calcule la somme totale des nombres sur une diagonale
+
+SI total_i=total_j ET total_j=total_ij ET total_ij=total_i ALORS //on verifie si les lignes,colonnes et diagonales possèdent la même somme
+
+	affichetab(tabcarre)
+FINSI
+FINFONCTION
+
+
+FONCTION affichetab(tabcarre) //on affiche le tableau pour l'utilisateur
+
+POUR i DE 0 A constante FAIRE PAS DE 1
+		POUR j DE 0 A constante FAIRE PAS DE 1
+			ECRIRE tabcarre[i][j];
+		FINPOUR
+	FINPOUR
+
+FINFONCTION
+
+
+
+VAR:
+
+tabcarre<-tableau[i][j] :TABLEAU;
+constante,nb: ENTIER;
+constante<-5;
+nb<-1;
+
+DEBUT//il ne nous reste qu'à appeler toutes les fonction dans l'ordre
+
+initialisation(tabcarre)
+avancer(tabcarre)
+verification(tabcarre)
+affichetab(tabcarre)
+
+
